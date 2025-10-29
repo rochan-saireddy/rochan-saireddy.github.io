@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pescado VEGETAL — Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main id="app">
+    <header class="hero">
+      <h1 id="yourName">Pescado VEGETAL</h1>
+      <p class="subtitle">Bio · CS · Chem · Linguistics</p>
+    </header>
+
+    <!-- Orbs are injected by JS but fallback markup is included for users without JS -->
+    <div id="orbs" aria-hidden="false">
+      <!-- JS will create 6 orbs inside this container -->
+    </div>
+
+    <!-- Example page sections to scroll through -->
+    <section class="panel" id="about">
+      <div class="panel-inner">
+        <h2>About</h2>
+        <p>Short about blurb. Replace with your bio.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="projects">
+      <div class="panel-inner">
+        <h2>Projects</h2>
+        <p>Highlights of research, competitions, repos.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="contact">
+      <div class="panel-inner">
+        <h2>Contact</h2>
+        <p>Email / GitHub / LinkedIn links.</p>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
