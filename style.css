@@ -87,78 +87,93 @@ body{
   width: var(--size);
   height: var(--size);
   border-radius: 50%;
-  background-image: url('assets/orb.png'); /* put your orb image at assets/orb.png */
+  background-image: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%),
+                    radial-gradient(circle at 70% 75%, rgba(255,255,255,0.12), transparent 40%),
+                    url('assets/orb.png');
   background-size: cover;
   background-position: center;
-  filter: drop-shadow(0 18px 30px rgba(0,0,0,0.7));
-  opacity: 0.95;
+  filter: drop-shadow(0 0 40px rgba(140, 90, 255, 0.4))
+          drop-shadow(0 0 80px rgba(0, 180, 216, 0.25));
+  opacity: 0.96;
   transform-origin: center;
   transition: transform 600ms cubic-bezier(.2,.9,.3,1),
               box-shadow 400ms ease,
               left 1100ms ease,
-              top 1100ms ease;
+              top 1100ms ease,
+              filter 800ms ease;
   pointer-events: auto;
   cursor: pointer;
   display:flex;
   align-items:center;
   justify-content:center;
+  mix-blend-mode: screen;
 }
 
-/* Inner glow layers using pseudo-elements */
-.orb::before,
+/* Outer glow halo */
+.orb::before {
+  content:'';
+  position:absolute;
+  inset:-8px;
+  border-radius:50%;
+  background: radial-gradient(circle at 50% 50%, rgba(180,100,255,0.12), transparent 70%);
+  box-shadow:
+    0 0 60px 25px rgba(157,78,237,0.2),
+    0 0 80px 35px rgba(0,180,216,0.18),
+    inset 0 0 40px rgba(255,255,255,0.04);
+  mix-blend-mode: screen;
+  transition: all 600ms ease;
+  pointer-events:none;
+}
+
+/* Soft reflection */
 .orb::after {
   content:'';
   position:absolute;
   inset:0;
   border-radius:50%;
+  background: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.25), transparent 35%),
+              radial-gradient(circle at 70% 80%, rgba(255,255,255,0.08), transparent 45%);
+  opacity: 0.9;
   pointer-events:none;
-}
-
-/* outer aura */
-.orb::before {
-  box-shadow:
-    0 0 40px 12px rgba(157,78,237,0.10),
-    inset 0 0 60px rgba(0,176,216,0.06);
   mix-blend-mode: screen;
-  transition: box-shadow 400ms ease, transform 600ms ease;
 }
 
-/* subtle inner sheen */
-.orb::after {
-  background: radial-gradient(circle at 30% 25%, rgba(255,255,255,0.14), transparent 18%),
-              radial-gradient(circle at 70% 70%, rgba(255,255,255,0.06), transparent 35%);
-  transform: translateZ(0);
-  opacity: 0.95;
-}
-
-/* pulsing / breathing keyframes (dynamic) */
+/* Breathing and subtle float */
 @keyframes breath {
-  0%   { transform: scale(0.985) translateZ(0) rotate(0deg); filter: saturate(1); }
-  40%  { transform: scale(1.03) translateZ(0) rotate(1.2deg); filter: saturate(1.05); }
-  100% { transform: scale(0.99) translateZ(0) rotate(-0.6deg); filter: saturate(1); }
+  0%   { transform: scale(0.98) rotate(-1deg); filter: brightness(1); }
+  50%  { transform: scale(1.03) rotate(1deg); filter: brightness(1.08); }
+  100% { transform: scale(0.98) rotate(-1deg); filter: brightness(1); }
 }
-@keyframes tinyFloat {
-  0%   { transform: translateY(-2px); }
-  50%  { transform: translateY(4px); }
-  100% { transform: translateY(-2px); }
+@keyframes floaty {
+  0%,100% { transform: translateY(-3px); }
+  50% { transform: translateY(3px); }
 }
 
-/* when orb is dynamic (settled to side) */
+/* Bumbling state (before scroll) */
+.orb.bumbling {
+  animation: breath 5s ease-in-out infinite, floaty 6s ease-in-out infinite;
+  box-shadow: 0 0 70px 25px rgba(157,78,237,0.12),
+              0 0 100px 45px rgba(0,180,216,0.1);
+  transition: all 1s ease;
+}
+
+/* Settled state (after scroll) */
 .orb.settled {
-  transition: left 900ms cubic-bezier(.2,.9,.3,1), top 900ms cubic-bezier(.2,.9,.3,1);
-  animation: breath 3.6s ease-in-out infinite, tinyFloat 6s ease-in-out infinite;
-  box-shadow: 0 0 60px 26px rgba(0,180,216,0.12), 0 12px 40px rgba(0,0,0,0.6);
-  opacity: 1;
+  animation: breath 6s ease-in-out infinite;
+  box-shadow: 0 0 80px 35px rgba(0,180,216,0.18),
+              0 0 120px 50px rgba(157,78,237,0.15);
+  filter: brightness(1.08);
 }
 
-/* hover intensify */
+/* hover pop */
 .orb:hover {
   transform: scale(1.12);
+  filter: brightness(1.2) saturate(1.1);
 }
 .orb:hover::before {
   box-shadow:
-    0 0 90px 32px rgba(157,78,237,0.18),
-    inset 0 0 80px rgba(0,176,216,0.10);
+    0 0 100px 40px rgba(157,78,237,0.25),
+    0 0 140px 60px rgba(0,180,216,0.22);
 }
 
 /* label that fades in (right or left depending) */
