@@ -89,7 +89,7 @@ body{
   border-radius: 50%;
   background-image: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.25), transparent 50%),
                     radial-gradient(circle at 70% 75%, rgba(255,255,255,0.12), transparent 40%),
-                    url('assets/orb.jpg');
+                    url('orb.jpg');
   background-size: cover;
   background-position: center;
   filter: drop-shadow(0 0 40px rgba(140, 90, 255, 0.4))
